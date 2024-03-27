@@ -1,4 +1,4 @@
-package PCD.ass01.simtrafficexamples;
+package Ass01.simtrafficexamples;
 
 import pcd.ass01.simengineseq.AbstractAgent;
 import pcd.ass01.simengineseq.AbstractEnvironment;

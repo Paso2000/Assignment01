@@ -1,4 +1,4 @@
-package PCD.ass01.simtrafficexamples;
+package Ass01.simtrafficexamples;
 
 public class RunTrafficSimulationMassiveTest {
 

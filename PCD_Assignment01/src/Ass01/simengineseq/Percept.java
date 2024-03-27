@@ -1,4 +1,4 @@
-package PCD.ass01.simengineseq;
+package Ass01.simengineseq;
 
 /**
  * Base type for defining agent percepts
