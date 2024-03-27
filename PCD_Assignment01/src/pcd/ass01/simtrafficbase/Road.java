@@ -8,14 +8,14 @@ import java.util.List;
 public class Road {
 
 	private double len;
-	private P2d from;
-	private P2d to;
-	private List<TrafficLightInfo> trafficLights;
+	private pcd.ass01.simtrafficbase.P2d from;
+	private pcd.ass01.simtrafficbase.P2d to;
+	private List<pcd.ass01.simtrafficbase.TrafficLightInfo> trafficLights;
 
-	public Road(P2d from, P2d to) {
+	public Road(pcd.ass01.simtrafficbase.P2d from, pcd.ass01.simtrafficbase.P2d to) {
 		this.from = from;
 		this.to = to;
-		this.len = P2d.len(from, to);
+		this.len = pcd.ass01.simtrafficbase.P2d.len(from, to);
 		trafficLights = new ArrayList<>();
 	}
 	
@@ -23,7 +23,7 @@ public class Road {
 		return len;
 	}
 	
-	public P2d getFrom() {
+	public pcd.ass01.simtrafficbase.P2d getFrom() {
 		return from;
 	}
 	
@@ -32,7 +32,7 @@ public class Road {
 	}
 	
 	public void addTrafficLight(TrafficLight sem, double pos) {
-		trafficLights.add(new TrafficLightInfo(sem, this, pos));
+		trafficLights.add(new pcd.ass01.simtrafficbase.TrafficLightInfo(sem, this, pos));
 	}
 	
 	public List<TrafficLightInfo> getTrafficLights(){

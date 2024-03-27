@@ -2,11 +2,11 @@ package pcd.ass01.simtrafficbase;
 
 public  class CarAgentInfo {
 
-	private CarAgent car;
+	private pcd.ass01.simtrafficbase.CarAgent car;
 	private double pos;
-	private Road road;
+	private pcd.ass01.simtrafficbase.Road road;
 	
-	public CarAgentInfo(CarAgent car, Road road, double pos) {
+	public CarAgentInfo(pcd.ass01.simtrafficbase.CarAgent car, pcd.ass01.simtrafficbase.Road road, double pos) {
 		this.car = car;
 		this.road = road;
 		this.pos = pos;

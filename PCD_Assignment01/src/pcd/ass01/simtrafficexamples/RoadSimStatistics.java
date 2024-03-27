@@ -3,7 +3,7 @@ package pcd.ass01.simtrafficexamples;
 import pcd.ass01.simengineseq.AbstractAgent;
 import pcd.ass01.simengineseq.AbstractEnvironment;
 import pcd.ass01.simengineseq.SimulationListener;
-import pcd.ass01.simtrafficbase.*;
+import pcd.ass01.simtrafficbase.CarAgent;
 
 import java.util.List;
 

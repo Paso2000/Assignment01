@@ -10,13 +10,13 @@ import java.util.List;
 public abstract class AbstractSimulation {
 
 	/* environment of the simulation */
-	private AbstractEnvironment env;
+	private pcd.ass01.simengineseq.AbstractEnvironment env;
 	
 	/* list of the agents */
-	private List<AbstractAgent> agents;
+	private List<pcd.ass01.simengineseq.AbstractAgent> agents;
 	
 	/* simulation listeners */
-	private List<SimulationListener> listeners;
+	private List<pcd.ass01.simengineseq.SimulationListener> listeners;
 
 	/* logical time step */
 	private int dt;
@@ -36,8 +36,8 @@ public abstract class AbstractSimulation {
 
 
 	protected AbstractSimulation() {
-		agents = new ArrayList<AbstractAgent>();
-		listeners = new ArrayList<SimulationListener>();
+		agents = new ArrayList<pcd.ass01.simengineseq.AbstractAgent>();
+		listeners = new ArrayList<pcd.ass01.simengineseq.SimulationListener>();
 		toBeInSyncWithWallTime = false;
 	}
 	
@@ -54,10 +54,6 @@ public abstract class AbstractSimulation {
 	 * 
 	 * @param numSteps
 	 */
-
-	//prima inizializzo env e agents con due thread
-	//se altri thread decidono di fare cose prima li metto in wait
-
 	public void run(int numSteps) {		
 
 		startWallTime = System.currentTimeMillis();
@@ -65,40 +61,39 @@ public abstract class AbstractSimulation {
 		/* initialize the env and the agents inside */
 		int t = t0;
 
-		//init dell envirement
+		//inizializzo l'env
+
 		env.init();
 
-		//init degli agenti
+		//inizializzo agents
 		for (var a: agents) {
 			a.init(env);
 		}
-		//notifica che entrambi hanno finito la init
+		//notifico che è finito l'init
 		this.notifyReset(t, agents, env);
 		
 		long timePerStep = 0;
 		int nSteps = 0;
-		//fino a quando gli step fatti sono minori degli step da fare
+		//controllo che il  numero di step fatti sia minore degli step da fare
 		while (nSteps < numSteps) {
 
 			currentWallTime = System.currentTimeMillis();
 		
 			/* make a step */
-			//faccio avanzare l'envirment temporalmente
+			//eseguo azione con l'env
 			env.step(dt);
-
-			//faccio avanza gli agenti temporalmente
+			//eseguo azioni con gli agents
 			for (var agent: agents) {
 				agent.step(dt);
 			}
-			//aggiungiamo a t il tempo dt che è passato
+			//aggiorno il tempo
 			t += dt;
-			//notifica che è avvenuto un nuovo step
+			//notifico i cambianeti fatti
 			notifyNewStep(t, agents, env);
 
 			nSteps++;			
 			timePerStep += System.currentTimeMillis() - currentWallTime;
-
-			//non so a cosa serve
+			
 			if (toBeInSyncWithWallTime) {
 				syncWithWallTime();
 			}
@@ -129,11 +124,11 @@ public abstract class AbstractSimulation {
 		this.nStepsPerSec = nCyclesPerSec;
 	}
 		
-	protected void setupEnvironment(AbstractEnvironment env) {
+	protected void setupEnvironment(pcd.ass01.simengineseq.AbstractEnvironment env) {
 		this.env = env;
 	}
 
-	protected void addAgent(AbstractAgent agent) {
+	protected void addAgent(pcd.ass01.simengineseq.AbstractAgent agent) {
 		agents.add(agent);
 	}
 	
@@ -143,7 +138,7 @@ public abstract class AbstractSimulation {
 		this.listeners.add(l);
 	}
 	
-	private void notifyReset(int t0, List<AbstractAgent> agents, AbstractEnvironment env) {
+	private void notifyReset(int t0, List<pcd.ass01.simengineseq.AbstractAgent> agents, pcd.ass01.simengineseq.AbstractEnvironment env) {
 		for (var l: listeners) {
 			l.notifyInit(t0, agents, env);
 		}

@@ -15,7 +15,7 @@ public class RunTrafficSimulation {
 		// var simulation = new TrafficSimulationWithCrossRoads();
 		simulation.setup();
 		
-		RoadSimStatistics stat = new RoadSimStatistics();
+		pcd.ass01.simtrafficexamples.RoadSimStatistics stat = new RoadSimStatistics();
 		RoadSimView view = new RoadSimView();
 		view.display();
 		

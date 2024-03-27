@@ -8,7 +8,7 @@ package pcd.ass01.simengineseq;
 public abstract class AbstractAgent {
 	
 	private String myId;
-	private AbstractEnvironment env;
+	private pcd.ass01.simengineseq.AbstractEnvironment env;
 	
 	/**
 	 * Each agent has an identifier
@@ -24,7 +24,7 @@ public abstract class AbstractAgent {
 	 * 
 	 * @param env
 	 */
-	public void init(AbstractEnvironment env) {
+	public void init(pcd.ass01.simengineseq.AbstractEnvironment env) {
 		this.env = env;
 	}
 	
