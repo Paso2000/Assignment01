@@ -87,12 +87,6 @@ public abstract class AbstractSimulation {
 		List<List<AbstractAgent>> parts = new ArrayList<List<AbstractAgent>>();
 		getPartsForWorker(nThread, parts);
 
-		/*istanzio i worker*/
-		for (List<AbstractAgent> p : parts) {
-			Worker worker = new Worker(p, barrier);
-			workers.add(worker);
-		}
-
 		while (nSteps < numSteps) {
 
 			currentWallTime = System.currentTimeMillis();
@@ -101,10 +95,12 @@ public abstract class AbstractSimulation {
 			env.step(dt);
 
 			/*Paralellizzo la step degli agents*/
-			for (Worker w : workers){
-				w.setDt(dt);
-				w.start();
+			for (List<AbstractAgent> p : parts){
+				Worker worker = new Worker(p, barrier);
+				worker.setDt(dt);
+				worker.start();
 			}
+
 			try {
 				barrier.await();
 			} catch (InterruptedException | BrokenBarrierException e) {
