@@ -101,7 +101,7 @@ public class CarAgentExtended extends CarAgent {
 	}
 		
 	private boolean detectedNearCar() {
-		Optional<CarAgentInfo> car = currentPercept.nearestCarInFront();
+		Optional<pcd.ass01.simtrafficbase.CarAgentInfo> car = currentPercept.nearestCarInFront();
 		if (car.isEmpty()) {
 			return false;
 		} else {
@@ -111,7 +111,7 @@ public class CarAgentExtended extends CarAgent {
 	}
 	
 	private boolean detectedRedOrOrgangeSemNear() {
-		Optional<TrafficLightInfo> sem = currentPercept.nearestSem();
+		Optional<pcd.ass01.simtrafficbase.TrafficLightInfo> sem = currentPercept.nearestSem();
 		if (sem.isEmpty() || sem.get().sem().isGreen()) {
 			return false;
 		} else {

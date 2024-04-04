@@ -11,7 +11,7 @@ public interface SimulationListener {
 	 * @param agents
 	 * @param env
 	 */
-	void notifyInit(int t, List<AbstractAgent> agents, AbstractEnvironment env);
+	void notifyInit(int t, List<pcd.ass01.simengineseq.AbstractAgent> agents, AbstractEnvironment env);
 	
 	/**
 	 * Called at each step, updater all updates

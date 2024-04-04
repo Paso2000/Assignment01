@@ -19,10 +19,10 @@ public class RoadsEnv extends AbstractEnvironment {
 	private List<Road> roads;
 
 	/* traffic lights */
-	private List<TrafficLight> trafficLights;
+	private List<pcd.ass01.simtrafficbase.TrafficLight> trafficLights;
 	
 	/* cars situated in the environment */	
-	private HashMap<String, CarAgentInfo> registeredCars;
+	private HashMap<String, pcd.ass01.simtrafficbase.CarAgentInfo> registeredCars;
 
 
 	public RoadsEnv() {
@@ -47,7 +47,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 	
 	public void registerNewCar(CarAgent car, Road road, double pos) {
-		registeredCars.put(car.getId(), new CarAgentInfo(car, road, pos));
+		registeredCars.put(car.getId(), new pcd.ass01.simtrafficbase.CarAgentInfo(car, road, pos));
 	}
 
 	public Road createRoad(P2d p0, P2d p1) {
@@ -56,8 +56,8 @@ public class RoadsEnv extends AbstractEnvironment {
 		return r;
 	}
 
-	public TrafficLight createTrafficLight(P2d pos, TrafficLight.TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration) {
-		TrafficLight tl = new TrafficLight(pos, initialState, greenDuration, yellowDuration, redDuration);
+	public pcd.ass01.simtrafficbase.TrafficLight createTrafficLight(P2d pos, pcd.ass01.simtrafficbase.TrafficLight.TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration) {
+		pcd.ass01.simtrafficbase.TrafficLight tl = new pcd.ass01.simtrafficbase.TrafficLight(pos, initialState, greenDuration, yellowDuration, redDuration);
 		this.trafficLights.add(tl);
 		return tl;
 	}
@@ -65,16 +65,16 @@ public class RoadsEnv extends AbstractEnvironment {
 	@Override
 	public Percept getCurrentPercepts(String agentId) {
 		
-		CarAgentInfo carInfo = registeredCars.get(agentId);
+		pcd.ass01.simtrafficbase.CarAgentInfo carInfo = registeredCars.get(agentId);
 		double pos = carInfo.getPos();
 		Road road = carInfo.getRoad();
-		Optional<CarAgentInfo> nearestCar = getNearestCarInFront(road,pos, CAR_DETECTION_RANGE);
+		Optional<pcd.ass01.simtrafficbase.CarAgentInfo> nearestCar = getNearestCarInFront(road,pos, CAR_DETECTION_RANGE);
 		Optional<TrafficLightInfo> nearestSem = getNearestSemaphoreInFront(road,pos, SEM_DETECTION_RANGE);
 		
 		return new CarPercept(pos, nearestCar, nearestSem);
 	}
 
-	private Optional<CarAgentInfo> getNearestCarInFront(Road road, double carPos, double range){
+	private Optional<pcd.ass01.simtrafficbase.CarAgentInfo> getNearestCarInFront(Road road, double carPos, double range){
 		return 
 				registeredCars
 				.entrySet()
@@ -101,9 +101,9 @@ public class RoadsEnv extends AbstractEnvironment {
 	public void doAction(String agentId, Action act) {
 		switch (act) {
 		case MoveForward mv: {
-			CarAgentInfo info = registeredCars.get(agentId);
+			pcd.ass01.simtrafficbase.CarAgentInfo info = registeredCars.get(agentId);
 			Road road = info.getRoad();
-			Optional<CarAgentInfo> nearestCar = getNearestCarInFront(road, info.getPos(), CAR_DETECTION_RANGE);
+			Optional<pcd.ass01.simtrafficbase.CarAgentInfo> nearestCar = getNearestCarInFront(road, info.getPos(), CAR_DETECTION_RANGE);
 			
 			if (!nearestCar.isEmpty()) {
 				double dist = nearestCar.get().getPos() - info.getPos();

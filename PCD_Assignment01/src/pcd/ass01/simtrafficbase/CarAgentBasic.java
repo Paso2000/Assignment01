@@ -89,7 +89,7 @@ public class CarAgentBasic extends CarAgent {
 	/* aux methods */
 		
 	private boolean detectedNearCar() {
-		Optional<CarAgentInfo> car = currentPercept.nearestCarInFront();
+		Optional<pcd.ass01.simtrafficbase.CarAgentInfo> car = currentPercept.nearestCarInFront();
 		if (car.isEmpty()) {
 			return false;
 		} else {

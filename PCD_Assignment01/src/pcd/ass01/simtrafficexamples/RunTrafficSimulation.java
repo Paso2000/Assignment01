@@ -9,13 +9,13 @@ public class RunTrafficSimulation {
 
 	public static void main(String[] args) {		
 
-		var simulation = new TrafficSimulationSingleRoadTwoCars();
-		//var simulation = new TrafficSimulationSingleRoadSeveralCars();
-		// var simulation = new TrafficSimulationSingleRoadWithTrafficLightTwoCars();
-		// var simulation = new TrafficSimulationWithCrossRoads();
+		//var simulation = new TrafficSimulationSingleRoadTwoCars();
+		// var simulation = new TrafficSimulationSingleRoadSeveralCars();
+		 //var simulation = new TrafficSimulationSingleRoadWithTrafficLightTwoCars();
+		 var simulation = new TrafficSimulationWithCrossRoads();
 		simulation.setup();
 		
-		pcd.ass01.simtrafficexamples.RoadSimStatistics stat = new RoadSimStatistics();
+		RoadSimStatistics stat = new RoadSimStatistics();
 		RoadSimView view = new RoadSimView();
 		view.display();
 		

@@ -61,34 +61,28 @@ public abstract class AbstractSimulation {
 		/* initialize the env and the agents inside */
 		int t = t0;
 
-		//inizializzo l'env
-
 		env.init();
-
-		//inizializzo agents
 		for (var a: agents) {
 			a.init(env);
 		}
-		//notifico che è finito l'init
+
 		this.notifyReset(t, agents, env);
 		
 		long timePerStep = 0;
 		int nSteps = 0;
-		//controllo che il  numero di step fatti sia minore degli step da fare
+		
 		while (nSteps < numSteps) {
 
 			currentWallTime = System.currentTimeMillis();
 		
 			/* make a step */
-			//eseguo azione con l'env
+			
 			env.step(dt);
-			//eseguo azioni con gli agents
 			for (var agent: agents) {
 				agent.step(dt);
 			}
-			//aggiorno il tempo
 			t += dt;
-			//notifico i cambianeti fatti
+			
 			notifyNewStep(t, agents, env);
 
 			nSteps++;			

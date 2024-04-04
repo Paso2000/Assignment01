@@ -10,9 +10,9 @@ public class TrafficLight {
 	private TrafficLightState state, initialState;
 	private int currentTimeInState;
 	private int redDuration, greenDuration, yellowDuration;
-	private pcd.ass01.simtrafficbase.P2d pos;
+	private P2d pos;
 	
-	public TrafficLight(pcd.ass01.simtrafficbase.P2d pos, TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration) {
+	public TrafficLight(P2d pos, TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration) {
 		this.redDuration = redDuration;
 		this.greenDuration = greenDuration;
 		this.yellowDuration = yellowDuration;
