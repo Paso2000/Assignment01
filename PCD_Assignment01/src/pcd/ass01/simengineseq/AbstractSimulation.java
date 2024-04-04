@@ -1,7 +1,10 @@
 package pcd.ass01.simengineseq;
 
+import pcd.ass01.syncUtils.Worker;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 /**
@@ -35,10 +38,13 @@ public abstract class AbstractSimulation {
 	private long endWallTime;
 	private long averageTimePerStep;
 
+	private List<Worker> workers;
+
 
 	protected AbstractSimulation() {
 		agents = new ArrayList<AbstractAgent>();
 		listeners = new ArrayList<SimulationListener>();
+		workers = new ArrayList<Worker>();
 		toBeInSyncWithWallTime = false;
 	}
 	
@@ -83,7 +89,8 @@ public abstract class AbstractSimulation {
 
 		/*istanzio i worker*/
 		for (List<AbstractAgent> p : parts) {
-
+			Worker worker = new Worker(p, barrier);
+			workers.add(worker);
 		}
 
 		while (nSteps < numSteps) {
@@ -91,16 +98,20 @@ public abstract class AbstractSimulation {
 			currentWallTime = System.currentTimeMillis();
 		
 			/* make a step */
-			
 			env.step(dt);
 
-			for (var agent: agents) {
-
-				agent.step(dt);
+			/*Paralellizzo la step degli agents*/
+			for (Worker w : workers){
+				w.setDt(dt);
+				w.start();
+			}
+			try {
+				barrier.await();
+			} catch (InterruptedException | BrokenBarrierException e) {
+				throw new RuntimeException(e);
 			}
 
-
-			t += dt;
+            t += dt;
 			
 			notifyNewStep(t, agents, env);
 
