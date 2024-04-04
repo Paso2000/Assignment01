@@ -9,21 +9,19 @@ import java.util.concurrent.CyclicBarrier;
 public class Worker extends Thread{
     private int dt;
     private List<AbstractAgent> agents;
-    private Boolean flag;
-
     private CyclicBarrier barrier;
+
     public Worker(List<AbstractAgent> agents, CyclicBarrier barrier){
-        this.agents=agents;
-        this.barrier=barrier;
+        this.agents = agents;
+        this.barrier = barrier;
     }
 
-    public void setDt(int dt,boolean flag){
+    public void setDt(int dt){
         this.dt=dt;
-        this.flag=flag;
     }
+
     @Override
     public void run(){
-        while (true){
 
         for (AbstractAgent agent: agents){
             agent.step(dt);
@@ -33,8 +31,7 @@ public class Worker extends Thread{
         } catch (InterruptedException | BrokenBarrierException e) {
             throw new RuntimeException(e);
         }
-        flag=false;
-        }
+
 
     }
 }

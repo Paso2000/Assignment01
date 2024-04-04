@@ -13,14 +13,14 @@ import java.util.List;
  * - min speed
  * - max speed
  */
-public class RoadSimStatistics implements SimulationListener {
+public class StatisticsListener implements SimulationListener {
 
 	
 	private double averageSpeed;
 	private double minSpeed;
 	private double maxSpeed;
 	
-	public RoadSimStatistics() {
+	public StatisticsListener() {
 	}
 	
 	@Override
@@ -52,7 +52,17 @@ public class RoadSimStatistics implements SimulationListener {
 		}
 		log("average speed: " + avSpeed);
 	}
-	
+
+	@Override
+	public void notifyStateChanged(String message) {
+		log("simulation interrupted");
+	}
+
+	@Override
+	public void notifyStepOver() {
+
+	}
+
 	public double getAverageSpeed() {
 		return this.averageSpeed;
 	}

@@ -6,9 +6,9 @@ import pcd.ass01.simtrafficbase.*;
 public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimulation {
 
 	private int numCars;
-	
-	public TrafficSimulationSingleRoadMassiveNumberOfCars(int numCars) {
-		super();
+
+	public TrafficSimulationSingleRoadMassiveNumberOfCars(Flag stopFlag,StartSynch sync, int numCars) {
+		super(stopFlag, sync);
 		this.numCars = numCars;
 	}
 	

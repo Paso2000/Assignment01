@@ -1,8 +1,11 @@
 package pcd.ass01.simengineseq;
 
+import pcd.ass01.simtrafficexamples.Flag;
+import pcd.ass01.simtrafficexamples.StartSynch;
 import pcd.ass01.syncUtils.Worker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -38,16 +41,22 @@ public abstract class AbstractSimulation {
 	private long endWallTime;
 	private long averageTimePerStep;
 
+	private Flag stopFlag;
+
+	private StartSynch synch;
+
 	private List<Worker> workers;
 
 
-	protected AbstractSimulation() {
+	protected AbstractSimulation(Flag stopFlag, StartSynch sync) {
 		agents = new ArrayList<AbstractAgent>();
 		listeners = new ArrayList<SimulationListener>();
 		workers = new ArrayList<Worker>();
 		toBeInSyncWithWallTime = false;
+		this.stopFlag=stopFlag;
+		this.synch=sync;
 	}
-	
+
 	/**
 	 * 
 	 * Method used to configure the simulation, specifying env and agents
@@ -59,10 +68,10 @@ public abstract class AbstractSimulation {
 	 * Method running the simulation for a number of steps,
 	 * using a sequential approach
 	 * 
-	 * @param numSteps
 	 */
-	public void run(int numSteps) {
-
+	public void run() {
+		int numSteps = synch.waitStart();
+		notifyStateChanged("Running");
 		startWallTime = System.currentTimeMillis();
 
 		/* initialize the env and the agents inside */
@@ -87,12 +96,6 @@ public abstract class AbstractSimulation {
 		List<List<AbstractAgent>> parts = new ArrayList<List<AbstractAgent>>();
 		getPartsForWorker(nThread, parts);
 
-		/*istanzio i worker*/
-		for (List<AbstractAgent> p : parts) {
-			Worker worker = new Worker(p, barrier);
-			workers.add(worker);
-		}
-
 		while (nSteps < numSteps) {
 
 			currentWallTime = System.currentTimeMillis();
@@ -101,10 +104,12 @@ public abstract class AbstractSimulation {
 			env.step(dt);
 
 			/*Paralellizzo la step degli agents*/
-			for (Worker w : workers){
-				w.setDt(dt);
-				w.start();
+			for (List<AbstractAgent> p : parts){
+				Worker worker = new Worker(p, barrier);
+				worker.setDt(dt);
+				worker.start();
 			}
+
 			try {
 				barrier.await();
 			} catch (InterruptedException | BrokenBarrierException e) {
@@ -112,8 +117,16 @@ public abstract class AbstractSimulation {
 			}
 
             t += dt;
-			
-			notifyNewStep(t, agents, env);
+
+
+			if (!stopFlag.isSet()) {
+				System.out.println(stopFlag.isSet());
+				notifyNewStep(t, agents, env);
+			} else {
+				System.out.println(stopFlag.isSet());
+				notifyStateChanged("Interrupted");
+
+			}
 
 			nSteps++;			
 			timePerStep += System.currentTimeMillis() - currentWallTime;
@@ -192,6 +205,18 @@ public abstract class AbstractSimulation {
 		}
 	}
 
+	private void notifyStateChanged(String message) {
+		for (var l: listeners) {
+			l.notifyStateChanged(message);
+		}
+	}
+
+	private void notifyStepOver() {
+		for (var l: listeners) {
+			l.notifyStepOver();
+		}
+	}
+
 	/* method to sync with wall time at a specified step rate */
 	
 	private void syncWithWallTime() {
@@ -204,4 +229,6 @@ public abstract class AbstractSimulation {
 			}
 		} catch (Exception ex) {}		
 	}
+
+
 }
