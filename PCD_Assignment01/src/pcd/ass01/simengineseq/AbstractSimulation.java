@@ -36,8 +36,8 @@ public abstract class AbstractSimulation {
 
 
 	protected AbstractSimulation() {
-		agents = new ArrayList<pcd.ass01.simengineseq.AbstractAgent>();
-		listeners = new ArrayList<pcd.ass01.simengineseq.SimulationListener>();
+		agents = new ArrayList<AbstractAgent>();
+		listeners = new ArrayList<SimulationListener>();
 		toBeInSyncWithWallTime = false;
 	}
 	
