@@ -13,6 +13,7 @@ public class Worker extends Thread{
     private CyclicBarrier barrier;
     public Worker(List<AbstractAgent> agents, CyclicBarrier barrier){
         this.agents=agents;
+        this.barrier=barrier;
     }
 
     public void setDt(int dt){
@@ -25,9 +26,7 @@ public class Worker extends Thread{
         }
         try {
             barrier.await();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (BrokenBarrierException e) {
+        } catch (InterruptedException | BrokenBarrierException e) {
             throw new RuntimeException(e);
         }
 
