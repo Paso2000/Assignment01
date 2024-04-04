@@ -10,13 +10,13 @@ import java.util.List;
 public abstract class AbstractSimulation {
 
 	/* environment of the simulation */
-	private pcd.ass01.simengineseq.AbstractEnvironment env;
+	private AbstractEnvironment env;
 	
 	/* list of the agents */
-	private List<pcd.ass01.simengineseq.AbstractAgent> agents;
+	private List<AbstractAgent> agents;
 	
 	/* simulation listeners */
-	private List<pcd.ass01.simengineseq.SimulationListener> listeners;
+	private List<SimulationListener> listeners;
 
 	/* logical time step */
 	private int dt;
@@ -59,6 +59,7 @@ public abstract class AbstractSimulation {
 		startWallTime = System.currentTimeMillis();
 
 		/* initialize the env and the agents inside */
+		/* lascio le Init serializzate*/
 		int t = t0;
 
 		env.init();
@@ -70,7 +71,9 @@ public abstract class AbstractSimulation {
 		
 		long timePerStep = 0;
 		int nSteps = 0;
-		
+
+		//parallelizziamo la step
+
 		while (nSteps < numSteps) {
 
 			currentWallTime = System.currentTimeMillis();
@@ -80,6 +83,7 @@ public abstract class AbstractSimulation {
 			env.step(dt);
 
 			for (var agent: agents) {
+
 				agent.step(dt);
 			}
 
@@ -121,11 +125,11 @@ public abstract class AbstractSimulation {
 		this.nStepsPerSec = nCyclesPerSec;
 	}
 		
-	protected void setupEnvironment(pcd.ass01.simengineseq.AbstractEnvironment env) {
+	protected void setupEnvironment(AbstractEnvironment env) {
 		this.env = env;
 	}
 
-	protected void addAgent(pcd.ass01.simengineseq.AbstractAgent agent) {
+	protected void addAgent(AbstractAgent agent) {
 		agents.add(agent);
 	}
 	
@@ -135,7 +139,7 @@ public abstract class AbstractSimulation {
 		this.listeners.add(l);
 	}
 	
-	private void notifyReset(int t0, List<pcd.ass01.simengineseq.AbstractAgent> agents, pcd.ass01.simengineseq.AbstractEnvironment env) {
+	private void notifyReset(int t0, List<AbstractAgent> agents, AbstractEnvironment env) {
 		for (var l: listeners) {
 			l.notifyInit(t0, agents, env);
 		}
