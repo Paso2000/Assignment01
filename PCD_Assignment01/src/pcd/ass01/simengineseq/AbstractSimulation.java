@@ -78,9 +78,12 @@ public abstract class AbstractSimulation {
 			/* make a step */
 			
 			env.step(dt);
+
 			for (var agent: agents) {
 				agent.step(dt);
 			}
+
+
 			t += dt;
 			
 			notifyNewStep(t, agents, env);
