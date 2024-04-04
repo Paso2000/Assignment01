@@ -9,15 +9,15 @@ import java.util.concurrent.CyclicBarrier;
 public class Worker extends Thread{
     private int dt;
     private List<AbstractAgent> agents;
-
     private CyclicBarrier barrier;
+
     public Worker(List<AbstractAgent> agents, CyclicBarrier barrier){
-        this.agents=agents;
-        this.barrier=barrier;
+        this.agents = agents;
+        this.barrier = barrier;
     }
 
     public void setDt(int dt){
-        this.dt=dt;
+        this.dt = dt;
     }
     @Override
     public void run(){
