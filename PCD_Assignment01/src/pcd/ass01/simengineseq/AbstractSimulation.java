@@ -2,6 +2,7 @@ package pcd.ass01.simengineseq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  * Base class for defining concrete simulations
@@ -54,14 +55,13 @@ public abstract class AbstractSimulation {
 	 * 
 	 * @param numSteps
 	 */
-	public void run(int numSteps) {		
+	public void run(int numSteps) {
 
 		startWallTime = System.currentTimeMillis();
 
 		/* initialize the env and the agents inside */
-		/* lascio le Init serializzate*/
 		int t = t0;
-
+		/* lascio le Init serializzate*/
 		env.init();
 		for (var a: agents) {
 			a.init(env);
@@ -72,7 +72,19 @@ public abstract class AbstractSimulation {
 		long timePerStep = 0;
 		int nSteps = 0;
 
-		//parallelizziamo la step
+		/*Inizializzo thread e barrier*/
+		int nThread = Runtime.getRuntime().availableProcessors();
+		int barrierParts = Math.min(agents.size(), nThread) + 1;
+		CyclicBarrier barrier = new CyclicBarrier(barrierParts);
+
+		/*calcolo quanti agent dovrà gestire ciascun worker*/
+		List<List<AbstractAgent>> parts = new ArrayList<List<AbstractAgent>>();
+		getPartsForWorker(nThread, parts);
+
+		/*istanzio i worker*/
+		for (List<AbstractAgent> p : parts) {
+
+		}
 
 		while (nSteps < numSteps) {
 
@@ -101,7 +113,25 @@ public abstract class AbstractSimulation {
 		this.averageTimePerStep = timePerStep / numSteps;
 		
 	}
-	
+
+	private void getPartsForWorker(int nThread, List<List<AbstractAgent>> parts) {
+		int agentsSplitted = 0;
+		int partsSize = agents.size() / (nThread - 1);
+		if (partsSize == 0) {
+			partsSize = 1;
+		}
+		int nParts = Math.min(agents.size(), nThread);
+		for (int i = 0; i < nParts; i++) {
+			int to = agentsSplitted + partsSize;
+			if (i == nThread - 1) {
+				to = agents.size();
+			}
+			parts.add(new ArrayList<AbstractAgent>(
+					agents.subList(agentsSplitted, to)));
+			agentsSplitted += partsSize;
+		}
+	}
+
 	public long getSimulationDuration() {
 		return endWallTime - startWallTime;
 	}
