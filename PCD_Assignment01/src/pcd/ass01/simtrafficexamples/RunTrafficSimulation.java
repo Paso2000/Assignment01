@@ -13,10 +13,11 @@ public class RunTrafficSimulation {
 		Flag stopFlag = new Flag();
 		Controller controller = new Controller(synch, stopFlag);
 
-		var simulation = new TrafficSimulationSingleRoadTwoCars(stopFlag, synch);
+		//var simulation = new TrafficSimulationSingleRoadTwoCars(stopFlag, synch);
 		//var simulation = new TrafficSimulationSingleRoadSeveralCars(stopFlag, synch);
 		//var simulation = new TrafficSimulationSingleRoadWithTrafficLightTwoCars(stopFlag, synch);
 		//var simulation = new TrafficSimulationWithCrossRoads(stopFlag, synch);
+		var simulation = new TrafficSimulationSingleRoadMassiveNumberOfCars(stopFlag, synch, 100);
 		simulation.setup();
 
 		StatisticsListener stat = new StatisticsListener();

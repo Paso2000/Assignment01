@@ -47,7 +47,7 @@ public class StatisticsListener implements SimulationListener {
 			}
 		}
 		
-		if (agents.size() > 0) {
+		if (!agents.isEmpty()) {
 			avSpeed /= agents.size();
 		}
 		log("average speed: " + avSpeed);
