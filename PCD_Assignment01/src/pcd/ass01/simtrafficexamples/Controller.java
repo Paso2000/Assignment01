@@ -24,4 +24,5 @@ public class Controller implements ViewListener {
     public synchronized void stopped() {
         stopFlag.set();
     }
+
 }

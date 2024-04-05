@@ -5,7 +5,6 @@ import pcd.ass01.simtrafficexamples.StartSynch;
 import pcd.ass01.syncUtils.Worker;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -45,13 +44,10 @@ public abstract class AbstractSimulation {
 
 	private StartSynch synch;
 
-	private List<Worker> workers;
-
 
 	protected AbstractSimulation(Flag stopFlag, StartSynch sync) {
 		agents = new ArrayList<AbstractAgent>();
 		listeners = new ArrayList<SimulationListener>();
-		workers = new ArrayList<Worker>();
 		toBeInSyncWithWallTime = false;
 		this.stopFlag=stopFlag;
 		this.synch=sync;
@@ -119,13 +115,14 @@ public abstract class AbstractSimulation {
             t += dt;
 
 
-			if (!stopFlag.isSet()) {
-				System.out.println(stopFlag.isSet());
+			if (!stopFlag.getValue()) {
+				//System.out.println(stopFlag.getValue());
 				notifyNewStep(t, agents, env);
 			} else {
-				System.out.println(stopFlag.isSet());
+				//System.out.println(stopFlag.getValue();
 				notifyStateChanged("Interrupted");
-
+				synch.waitStart();
+				notifyStateChanged("Running");
 			}
 
 			nSteps++;			

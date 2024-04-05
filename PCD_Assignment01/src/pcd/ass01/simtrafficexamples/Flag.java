@@ -16,7 +16,7 @@ public class Flag {
         flag = true;
     }
 
-    public synchronized boolean isSet() {
+    public synchronized boolean getValue() {
         return flag;
     }
 }

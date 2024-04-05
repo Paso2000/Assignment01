@@ -28,7 +28,7 @@ public class RoadSimView extends JFrame implements ActionListener {
 		setSize(1500,600);
 
 		steps = new JTextField(5);
-		steps.setText("0");
+		steps.setText("10000");
 
 		startButton = new JButton("start");
 		stopButton = new JButton("stop");
@@ -87,13 +87,14 @@ public class RoadSimView extends JFrame implements ActionListener {
 
 	private void notifyStopped(){
 		stopButton.setEnabled(false);
+		startButton.setEnabled(true);
 		listener.stopped();
 	}
 
 	public void changeState(final String s){
 		SwingUtilities.invokeLater(() -> {
 			state.setText(s);
-		});;
+		});
 	}
 
 	public void stepOver() {

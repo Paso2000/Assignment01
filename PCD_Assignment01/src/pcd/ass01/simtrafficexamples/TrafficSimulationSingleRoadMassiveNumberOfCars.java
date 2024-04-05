@@ -3,6 +3,8 @@ package pcd.ass01.simtrafficexamples;
 import pcd.ass01.simengineseq.AbstractSimulation;
 import pcd.ass01.simtrafficbase.*;
 
+import java.util.Random;
+
 public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimulation {
 
 	private int numCars;
@@ -11,22 +13,23 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
 		super(stopFlag, sync);
 		this.numCars = numCars;
 	}
-	
+
 	public void setup() {
 		this.setupTimings(0, 1);
 
 		RoadsEnv env = new RoadsEnv();
 		this.setupEnvironment(env);
 		
-		Road road = env.createRoad(new P2d(0,300), new P2d(15000,300));
+		Road road = env.createRoad(new P2d(0,300), new P2d(3000,300));
 
 		for (int i = 0; i < numCars; i++) {
 			
 			String carId = "car-" + i;
-			double initialPos = i*10;			
-			double carAcceleration = 1; //  + gen.nextDouble()/2;
-			double carDeceleration = 0.3; //  + gen.nextDouble()/2;
-			double carMaxSpeed = 7; // 4 + gen.nextDouble();
+			double initialPos = i*10;
+			Random gen = new Random();
+			double carAcceleration = 1 + gen.nextDouble()/2;
+			double carDeceleration = 0.3 + gen.nextDouble()/2;
+			double carMaxSpeed = 4 + gen.nextDouble();
 						
 			CarAgent car = new CarAgentBasic(carId, env, 
 									road,
@@ -35,8 +38,8 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
 									carDeceleration,
 									carMaxSpeed);
 			this.addAgent(car);
-			
-			/* no sync with wall-time */
+
+			this.syncWithTime(50);
 		}
 		
 	}	
