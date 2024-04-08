@@ -29,7 +29,7 @@ public class RunTrafficSimulation {
 
 		view.setViewListener(controller);
 		view.display();
-		simulation.run(10000);
+		simulation.run();
 
 	}
 }

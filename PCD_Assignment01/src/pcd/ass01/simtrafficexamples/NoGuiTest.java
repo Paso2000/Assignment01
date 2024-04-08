@@ -9,7 +9,7 @@ public class NoGuiTest {
         simulation.setup();
         log("Running the simulation: " + 100 + " cars, for " + nSteps + " steps ...");
 
-        simulation.run(nSteps);
+       // simulation.run(nSteps);
 
         long d = simulation.getSimulationDuration();
         log("Completed in " + d + " ms - average time per step: " + simulation.getAverageTimePerCycle() + " ms");

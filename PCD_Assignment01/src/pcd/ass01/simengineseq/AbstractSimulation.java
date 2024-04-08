@@ -65,7 +65,8 @@ public abstract class AbstractSimulation {
 	 * using a sequential approach
 	 * 
 	 */
-	public void run(int numSteps) {
+	public void run() {
+		int numSteps = synch.waitStart();
 		notifyStateChanged("Running");
 		startWallTime = System.currentTimeMillis();
 
