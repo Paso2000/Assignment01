@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class TrafficSimulationWithCrossRoads extends AbstractSimulation {
 
-    public TrafficSimulationWithCrossRoads(Flag stopFlag, StartSynch synch) {
-		super(stopFlag, synch);
+    public TrafficSimulationWithCrossRoads(SynchronizedFlag stopSynchronizedFlag, Synch synch) {
+		super(stopSynchronizedFlag, synch);
 	}
 
     public void setup() {

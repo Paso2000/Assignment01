@@ -1,7 +1,7 @@
 package pcd.ass01.simengineseq;
 
-import pcd.ass01.simtrafficexamples.Flag;
-import pcd.ass01.simtrafficexamples.StartSynch;
+import pcd.ass01.simtrafficexamples.SynchronizedFlag;
+import pcd.ass01.simtrafficexamples.Synch;
 import pcd.ass01.syncUtils.Worker;
 
 import java.util.ArrayList;
@@ -40,16 +40,16 @@ public abstract class AbstractSimulation {
 	private long endWallTime;
 	private long averageTimePerStep;
 
-	private Flag stopFlag;
+	private SynchronizedFlag stopSynchronizedFlag;
 
-	private StartSynch synch;
+	private Synch synch;
 
 
-	protected AbstractSimulation(Flag stopFlag, StartSynch sync) {
+	protected AbstractSimulation(SynchronizedFlag stopSynchronizedFlag, Synch sync) {
 		agents = new ArrayList<AbstractAgent>();
 		listeners = new ArrayList<SimulationListener>();
 		toBeInSyncWithWallTime = false;
-		this.stopFlag=stopFlag;
+		this.stopSynchronizedFlag = stopSynchronizedFlag;
 		this.synch=sync;
 	}
 
@@ -115,7 +115,7 @@ public abstract class AbstractSimulation {
             t += dt;
 
 
-			if (!stopFlag.getValue()) {
+			if (!stopSynchronizedFlag.getValue()) {
 				//System.out.println(stopFlag.getValue());
 				notifyNewStep(t, agents, env);
 			} else {
@@ -139,20 +139,20 @@ public abstract class AbstractSimulation {
 	}
 
 	private void getPartsForWorker(int nThread, List<List<AbstractAgent>> parts) {
-		int agentsSplitted = 0;
-		int partsSize = agents.size() / (nThread - 1);
-		if (partsSize == 0) {
-			partsSize = 1;
+		int agents = 0;
+		int partsLength = this.agents.size() / (nThread - 1);
+		if (partsLength == 0) {
+			partsLength = 1;
 		}
-		int nParts = Math.min(agents.size(), nThread);
-		for (int i = 0; i < nParts; i++) {
-			int to = agentsSplitted + partsSize;
+		int numParts = Math.min(this.agents.size(), nThread);
+		for (int i = 0; i < numParts; i++) {
+			int to = agents + partsLength;
 			if (i == nThread - 1) {
-				to = agents.size();
+				to = this.agents.size();
 			}
 			parts.add(new ArrayList<AbstractAgent>(
-					agents.subList(agentsSplitted, to)));
-			agentsSplitted += partsSize;
+					this.agents.subList(agents, to)));
+			agents += partsLength;
 		}
 	}
 

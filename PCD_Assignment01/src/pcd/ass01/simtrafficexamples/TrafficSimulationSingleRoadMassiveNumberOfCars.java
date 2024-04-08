@@ -9,8 +9,8 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
 
 	private int numCars;
 
-	public TrafficSimulationSingleRoadMassiveNumberOfCars(Flag stopFlag,StartSynch sync, int numCars) {
-		super(stopFlag, sync);
+	public TrafficSimulationSingleRoadMassiveNumberOfCars(SynchronizedFlag stopSynchronizedFlag, Synch sync, int numCars) {
+		super(stopSynchronizedFlag, sync);
 		this.numCars = numCars;
 	}
 

@@ -2,7 +2,6 @@ package pcd.ass01.simtrafficexamples;
 
 import pcd.ass01.simengineseq.AbstractAgent;
 import pcd.ass01.simengineseq.AbstractEnvironment;
-import pcd.ass01.simengineseq.SimulationListener;
 import pcd.ass01.simtrafficbase.*;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class RoadSimView extends JFrame implements ActionListener {
+public class RoadView extends JFrame implements ActionListener {
 
 
 	private RoadSimViewPanel panel;
@@ -23,7 +22,7 @@ public class RoadSimView extends JFrame implements ActionListener {
 	private ViewListener listener;
 	private static final int CAR_DRAW_SIZE = 10;
 	
-	public RoadSimView() {
+	public RoadView() {
 		super("RoadSim View");
 		setSize(1500,600);
 

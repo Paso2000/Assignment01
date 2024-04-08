@@ -9,9 +9,9 @@ import java.util.List;
 public class StateListener implements SimulationListener {
 
 
-    RoadSimView view;
+    RoadView view;
 
-    public StateListener(RoadSimView view) {
+    public StateListener(RoadView view) {
         super();
         this.view = view;
     }

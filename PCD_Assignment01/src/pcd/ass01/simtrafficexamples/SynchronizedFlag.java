@@ -1,10 +1,10 @@
 package pcd.ass01.simtrafficexamples;
 
-public class Flag {
+public class SynchronizedFlag {
 
     private boolean flag;
 
-    public Flag() {
+    public SynchronizedFlag() {
         flag = false;
     }
 

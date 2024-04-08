@@ -1,11 +1,11 @@
 package pcd.ass01.simtrafficexamples;
 
-public class StartSynch {
+public class Synch {
 
     private boolean started;
     private int steps;
 
-    public StartSynch(){
+    public Synch(){
         started = false;
     }
 

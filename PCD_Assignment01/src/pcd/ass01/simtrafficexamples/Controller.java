@@ -8,21 +8,21 @@ package pcd.ass01.simtrafficexamples;
  */
 public class Controller implements ViewListener {
 
-    private StartSynch synch;
-    private Flag stopFlag;
+    private Synch synch;
+    private SynchronizedFlag stopSynchronizedFlag;
 
-    public Controller(StartSynch synch, Flag stopFlag) {
+    public Controller(Synch synch, SynchronizedFlag stopSynchronizedFlag) {
         this.synch = synch;
-        this.stopFlag = stopFlag;
+        this.stopSynchronizedFlag = stopSynchronizedFlag;
     }
 
     public synchronized void started(int nStep) {
-        stopFlag.reset();
+        stopSynchronizedFlag.reset();
         synch.notifyStarted(nStep);
     }
 
     public synchronized void stopped() {
-        stopFlag.set();
+        stopSynchronizedFlag.set();
     }
 
 }
